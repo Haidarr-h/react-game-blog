@@ -1,8 +1,11 @@
+interface MessageProps {
+    name: string
+}
 
 // PascalCasing
-function Message() {
+function Message({name}:MessageProps) {
 
-    const name = 'Haidare';
+    // const name = 'Haidare';
     if (name)
         return <h1>Hello my good sir {name} <br /> How is your day sir ?</h1>
 

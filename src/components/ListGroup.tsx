@@ -1,23 +1,43 @@
-import { Fragment } from "react";
+import { useState, MouseEvent } from "react";
 
-function ListGroup() {
-  let items = ["Bogor", "Jakarta", "Bekasi", "Depok", "Tangerang"];
-  //   items = [];
+interface listProps {
+  items: string[];
+  heading: string;
+  onSelectedItems: (item:string) => void;
+}
 
+function ListGroup({ items, heading, onSelectedItems }: listProps) {
   const message = () => {
     return items.length === 0 && <p>No item kota brother</p>;
+  };
+  // event handler
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const handleClick = (index: number, item: string) => {
+    if (selectedIndex === index) {
+      setSelectedIndex(-1);
+    } else {
+      setSelectedIndex(index);
+    }
+    onSelectedItems(item);
   };
 
   return (
     <>
-      <h3>List Grup wilayah kota mantap</h3>
+      <h3>{heading}</h3>
+      <br />
       {message()}
       <ul className="list-group">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
             key={item}
-            className="list-group-item"
-            onClick={() => console.log("you clicked", item)}
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            onClick={() => {
+              handleClick(index, item);
+            }}
           >
             {item}
           </li>
